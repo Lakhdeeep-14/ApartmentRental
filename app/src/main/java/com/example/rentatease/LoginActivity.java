@@ -69,11 +69,11 @@ public class LoginActivity extends AppCompatActivity {
 //                            Intent intent = new Intent(this, MainActivity.class);
 //                            startActivity(intent);
                         } else {
-                            Toast.makeText(LoginActivity.this, "Password is wrong..", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "Password is wrong", Toast.LENGTH_LONG).show();
                         }
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, "User not found!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_LONG).show();
                 }
             }
 
