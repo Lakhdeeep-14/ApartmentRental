@@ -60,7 +60,7 @@ public class Signup extends AppCompatActivity {
 
         databaseUser.child(id).setValue(user , (error, ref) -> {
             if(error == null){
-                Toast.makeText(this, "User Sign up success", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "User Sign up is successfully", Toast.LENGTH_LONG).show();
             }
             System.err.println("Value was set. Error = "+error);
             // Or: throw error.toException();
