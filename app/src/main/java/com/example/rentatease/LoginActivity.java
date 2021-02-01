@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, "User is not found", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "User  not found", Toast.LENGTH_LONG).show();
                 }
             }
 
