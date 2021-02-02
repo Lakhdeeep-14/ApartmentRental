@@ -11,7 +11,7 @@
         android:id="@+id/rentAtEase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rent At Ease!!!!!"
+        android:text="Rent At Ease!"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="90dp"
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:hint="Email ID" />
+            android:hint="Email Id" />
     </com.google.android.material.textfield.TextInputLayout>
 <!--
     <TextView

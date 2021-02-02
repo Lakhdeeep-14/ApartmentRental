@@ -44,8 +44,8 @@ public class Signup extends AppCompatActivity {
 
     private void addUserToDatabase(){
         fname_text = findViewById(R.id.fname_text);
-        pnumber_edtTxt = findViewById(R.id.pnumber_edtTxt);
         email_edtTxt = findViewById(R.id.email_edtTxt);
+        pnumber_edtTxt = findViewById(R.id.pnumber_edtTxt);
         paswd_edtTxt = findViewById(R.id.paswd_edtTxt);
         radioGrp = findViewById(R.id.radioGrp);
 
