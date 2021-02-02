@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:inputType="text"
-            android:hint="Your Name" />
+            android:hint="Name" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
