@@ -17,7 +17,7 @@
         android:id="@+id/txt"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="A Higher Quality Of Living!...."
+        android:text="A Higher Quality Of Living!.."
         android:textColor="@color/purple_500"
         app:layout_constraintTop_toBottomOf="@+id/splashscreen"
         app:layout_constraintLeft_toLeftOf="parent"
