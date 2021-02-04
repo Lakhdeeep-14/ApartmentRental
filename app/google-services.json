@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "592693785487",
+    "project_id": "rentatease-28476",
+    "storage_bucket": "rentatease-28476.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592693785487:android:5b77be9f9693a0aa94d1fa",
+        "android_client_info": {
+          "package_name": "com.example.rentatease"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592693785487-7jrll3vhteud93vojc2caris64osn1vt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5S5lLw1_ovBCHRKpfWc5lgA54ldPzGdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592693785487-7jrll3vhteud93vojc2caris64osn1vt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
