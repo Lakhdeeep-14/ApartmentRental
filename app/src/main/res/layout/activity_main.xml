@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:hint="Email Id" />
+            android:hint="Email ID" />
     </com.google.android.material.textfield.TextInputLayout>
 <!--
     <TextView
