@@ -1,11 +1,11 @@
 package com.example.rentatease.model;
 
 public class User {
-    String fName;
-    String phoneNumber;
-    String email;
-    String password;
-    String userType;
+    private String fName;
+    private String phoneNumber;
+    private String email;
+    private String password;
+    private String userType;
 
     public User(String fName, String phoneNumber, String email, String password, String userType) {
         this.fName = fName;
