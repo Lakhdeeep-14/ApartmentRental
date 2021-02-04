@@ -7,9 +7,6 @@ public class User {
     String password;
     String userType;
 
-    public User() {
-    }
-
     public User(String fName, String phoneNumber, String email, String password, String userType) {
         this.fName = fName;
         this.phoneNumber = phoneNumber;
