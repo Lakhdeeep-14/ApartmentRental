@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:background="@color/white"
-            android:hint="Email" />
+            android:hint="Email Id" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:background="@color/white"
-            android:hint="Password" />
+            android:hint="Enter Password" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup
