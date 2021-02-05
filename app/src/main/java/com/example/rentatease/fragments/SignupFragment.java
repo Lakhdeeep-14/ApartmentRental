@@ -67,9 +67,10 @@ public class SignupFragment extends Fragment {
     }
 
     private void addUserToDatabase(String fname, String phNumber, String email, String passwrd , String userType){
-        User user = new User(fname, phNumber, email, passwrd, userType);
-
         String id = databaseUser.push().getKey();
+        User user = new User(id, fname, phNumber, email, passwrd, userType);
+
+
 
         databaseUser.child(id).setValue(user , (error, ref) -> {
             if(error == null){

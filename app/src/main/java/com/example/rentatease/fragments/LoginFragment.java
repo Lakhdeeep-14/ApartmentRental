@@ -84,8 +84,14 @@ public class LoginFragment extends Fragment {
 
                         if (userObj.getPassword().equals(pass)) {
                             if(userObj.getUserType().equals("Owner")){
+                                AddApartmentFragment addApartmentFragment = new AddApartmentFragment();
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("User" , userObj);
+
+                                addApartmentFragment.setArguments(bundle);
+
                                 getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).
-                                        replace(R.id.fragment, new AddApartmentFragment()).commit();
+                                        replace(R.id.fragment, addApartmentFragment).commit();
 
                             }
                             Toast.makeText(getContext(), "Welcome " + userObj.getfName() , Toast.LENGTH_LONG).show();

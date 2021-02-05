@@ -1,6 +1,11 @@
 package com.example.rentatease.model;
 
-public class User {
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class User implements Serializable {
+    private String userId;
     private String fName;
     private String phoneNumber;
     private String email;
@@ -10,12 +15,22 @@ public class User {
     public User(){
 
     }
-    public User(String fName, String phoneNumber, String email, String password, String userType) {
+
+    public User(String userId, String fName, String phoneNumber, String email, String password, String userType) {
+        this.userId = userId;
         this.fName = fName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
         this.userType = userType;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getfName() {
