@@ -25,6 +25,20 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
+    <Button
+        android:id="@+id/sendfeedback"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:fontFamily="serif"
+        android:onClick="FeedbackSent"
+        android:text="Click Here To Send Feedback "
+        tools:ignore="MissingConstraints,OnClick"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="311dp" />
+
+
+
+
 
 
 
