@@ -1,16 +1,27 @@
 package com.example.rentatease.model;
 
 public class ApartmentDetail {
+
     private User user;
     private int price;
     private String description;
     private String address;
+    private String location;
 
-    public ApartmentDetail(User user, int price, String description, String address) {
+    public ApartmentDetail(User user, int price, String description, String address, String location) {
         this.user = user;
         this.price = price;
         this.description = description;
         this.address = address;
+        this.location = location;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public User getUser() {

@@ -1,13 +1,12 @@
-package com.example.rentatease;
+package com.example.rentatease.fragments;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.rentatease.R;
 import com.example.rentatease.model.User;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -19,25 +18,46 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class LoginActivity extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-    MaterialTextView signup;
+public class LoginFragment extends Fragment {
+
+    MaterialTextView signupTxt;
     MaterialButton loginBtn;
+    TextInputEditText email;
+    TextInputEditText psd;
     DatabaseReference databaseUser;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    }
 
-        signup = findViewById(R.id.signup);
-        loginBtn = findViewById(R.id.loginBtn);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.activity_main, container, false);
+
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        signupTxt = view.findViewById(R.id.signupTxt);
+        loginBtn = view.findViewById(R.id.loginBtn);
+        email = view.findViewById(R.id.email_text);
+        psd = view.findViewById(R.id.paswd_edtTxt);
+
         databaseUser = FirebaseDatabase.getInstance().getReference("User");
 
-        signup.setOnClickListener(
+        signupTxt.setOnClickListener(
                 v -> {
-                    Intent intent = new Intent(LoginActivity.this, Signup.class);
-                    startActivity(intent);
+                    getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).
+                            replace(R.id.fragment, new SignupFragment()).commit();
                 });
 
         loginBtn.setOnClickListener(
@@ -47,8 +67,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void checkForLogin(){
-        TextInputEditText email = findViewById(R.id.email_text);
-        TextInputEditText psd = findViewById(R.id.paswd_edtTxt);
 
         String emailText = email.getText().toString().trim();
         String pass = psd.getText().toString().trim();
@@ -65,15 +83,20 @@ public class LoginActivity extends AppCompatActivity {
                         User userObj = user.getValue(User.class);
 
                         if (userObj.getPassword().equals(pass)) {
-                            Toast.makeText(LoginActivity.this, "Welcome " + userObj.getfName() , Toast.LENGTH_LONG).show();
+                            if(userObj.getUserType().equals("Owner")){
+                                getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).
+                                        replace(R.id.fragment, new AddApartmentFragment()).commit();
+
+                            }
+                            Toast.makeText(getContext(), "Welcome " + userObj.getfName() , Toast.LENGTH_LONG).show();
 //                            Intent intent = new Intent(this, MainActivity.class);
 //                            startActivity(intent);
                         } else {
-                            Toast.makeText(LoginActivity.this, "Password is wrong", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Password is wrong", Toast.LENGTH_LONG).show();
                         }
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, "User  not found", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "User  not found", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -99,5 +122,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });*/
     }
-
 }

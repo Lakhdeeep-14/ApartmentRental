@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    android:id="@+id/container">
 
     <TextView
         android:id="@+id/rentAtEase"
@@ -116,11 +116,11 @@
         android:textSize="16dp"
         android:layout_marginTop="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/signup"
+        app:layout_constraintRight_toLeftOf="@+id/signupTxt"
         app:layout_constraintTop_toBottomOf="@+id/lineView"
         />
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/signup"
+        android:id="@+id/signupTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="110dp"
