@@ -116,7 +116,7 @@
             android:shadowColor="@color/purple_500"
             android:outlineAmbientShadowColor="@color/purple_500"
             app:useMaterialThemeColors="true"
-            android:text="Landlord"/>
+            android:text="Owner"/>
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/buyerRB"
