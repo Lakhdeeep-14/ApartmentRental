@@ -15,6 +15,15 @@
         android:fontFamily="serif"
         android:hint="Type your user name Here"
         tools:ignore="MissingConstraints" />
+    <EditText
+        android:id="@+id/Feedback"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:fontFamily="serif"
+        android:hint="Your Feedback Helps Us In Improving our Application "
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
 
 
