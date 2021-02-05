@@ -37,7 +37,7 @@
             android:inputType="text"
             android:hint="First Name" />
     </com.google.android.material.textfield.TextInputLayout>
-
+    
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/phoneNumberLL"
         android:layout_width="match_parent"
@@ -121,7 +121,7 @@
             android:id="@+id/buyerRB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
+            android:layout_marginStart="70dp"
             android:text="Renter" />
 
     </RadioGroup>
