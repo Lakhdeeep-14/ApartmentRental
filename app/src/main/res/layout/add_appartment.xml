@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:background="@color/white"
-            android:hint="Price of one condo" />
+            android:hint="Price" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
