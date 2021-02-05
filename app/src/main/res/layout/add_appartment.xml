@@ -79,6 +79,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:background="@color/white"
+            android:textStyle="italic"
             android:hint="Price" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,6 +99,7 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:background="@color/white"
+            android:textStyle="italic"
             android:hint="Address" />
     </com.google.android.material.textfield.TextInputLayout>
 
