@@ -14,7 +14,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginStart="40dp"
         android:textColor="@color/purple_500"
-        android:textSize="24dp"
+        android:textSize="25dp"
         android:textStyle="bold"/>
 
     <ImageView
