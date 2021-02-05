@@ -55,6 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Upload Image two"
+        android:textStyle="bold"
         android:layout_marginTop="30dp"
         app:layout_constraintLeft_toRightOf="@+id/img2"
         app:layout_constraintRight_toRightOf="parent"
@@ -78,6 +79,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:background="@color/white"
+            android:textStyle="italic"
             android:hint="Price" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,6 +99,7 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:background="@color/white"
+            android:textStyle="italic"
             android:hint="Address" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -117,7 +120,9 @@
             android:layout_height="wrap_content"
             android:inputType="text|textMultiLine"
             android:background="@color/white"
+            android:textStyle="italic"
             android:hint="Description" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
 
