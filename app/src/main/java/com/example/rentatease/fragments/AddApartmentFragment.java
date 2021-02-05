@@ -90,12 +90,54 @@ public class AddApartmentFragment extends Fragment {
 
         addAptBtn.setOnClickListener(
                 v -> {
-                    insertNewApt();
+                    String price = price_edtTxt.getText().toString();
+                    String description = description_edtTxt.getText().toString();
+                    String location = location_edtTxt.getText().toString();
+
+                    if(price.equals("")){
+                        Toast.makeText(getContext(), "Enter Price" , Toast.LENGTH_LONG).show();
+                    }else if(description.equals("")){
+                        Toast.makeText(getContext(), "Enter Price" , Toast.LENGTH_LONG).show();
+                    }else if(location.equals("")){
+                        Toast.makeText(getContext(), "Enter Price" , Toast.LENGTH_LONG).show();
+                    }else {
+                        insertNewApt();
+                    }
                 }
         );
     }
 
     private void insertNewApt(){
+        aptID = databaseApt.push().getKey();
+
+        if(mImageUri1 != null || mImageUri2 !=null) {
+            if (mImageUri1 != null) {
+                uploadImageAndSaveUri(mImageUri1);
+            }
+            if (mImageUri2 != null) {
+                uploadImageAndSaveUri(mImageUri2);
+            }
+
+            ApartmentDetail apartmentDetail = new ApartmentDetail(aptID, user,
+                    price_edtTxt.getText().toString(),
+                    description_edtTxt.getText().toString(),
+                    location_edtTxt.getText().toString(),
+                    mImageUri1.getPath(),
+                    mImageUri2.getPath());
+
+            databaseApt.child(aptID).setValue(apartmentDetail , (error, ref) -> {
+                if(error == null){
+                    Toast.makeText(getContext(), "Apartment Added", Toast.LENGTH_LONG).show();
+                }
+                System.err.println("Value was set. Error = "+error);
+            });
+        }
+        else {
+            Toast.makeText(getContext(), "Upload Image", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+   /* private void insertNewApt(){
         aptID = databaseApt.push().getKey();
         ApartmentDetail apartmentDetail = new ApartmentDetail(aptID, user,
                 price_edtTxt.getText().toString(),
@@ -121,7 +163,7 @@ public class AddApartmentFragment extends Fragment {
             System.err.println("Value was set. Error = "+error);
         });
 
-    }
+    }*/
 
     private void openFileChooser() {
         Intent intent = new Intent();
@@ -153,6 +195,7 @@ public class AddApartmentFragment extends Fragment {
 
     private void uploadImageAndSaveUri(Uri mImageUri){
         Bitmap bitmap = null;
+
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), mImageUri);
         } catch (IOException e) {
@@ -164,9 +207,10 @@ public class AddApartmentFragment extends Fragment {
 
 
         StorageReference storageRef = storage.getReference();
-        StorageReference mountainsRef = storageRef.child("pics" + user.getUserId() + aptID);
+        StorageReference aptRefs = storageRef.child(mImageUri.getPath());
+//        StorageReference mountainsRef = storageRef.child("pics" + user.getUserId() + aptID);
 
-        UploadTask uploadTask = mountainsRef.putBytes(data);
+        UploadTask uploadTask = aptRefs.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -178,9 +222,7 @@ public class AddApartmentFragment extends Fragment {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
-                taskSnapshot.getUploadSessionUri();
             }
         });
-
     }
 }
