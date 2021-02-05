@@ -2,7 +2,6 @@ package com.example.rentatease.fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -25,7 +24,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -98,7 +96,6 @@ public class AddApartmentFragment extends Fragment {
     }
 
     private void insertNewApt(){
-
         aptID = databaseApt.push().getKey();
         ApartmentDetail apartmentDetail = new ApartmentDetail(aptID, user,
                 price_edtTxt.getText().toString(),
