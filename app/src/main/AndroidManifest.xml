@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RentAtEase">
-        <activity android:name=".chat"></activity>
+        <activity android:name=".Feedback"></activity>
+        <activity android:name=".chat" />
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
