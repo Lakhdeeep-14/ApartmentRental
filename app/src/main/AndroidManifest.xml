@@ -22,6 +22,7 @@
         <activity android:name=".activities.ForgotActivity" />
         <activity android:name=".activities.SignUpActivity" />
         <activity android:name=".activities.DashboardActivity" />
+        <activity android:name=".activities.AddApartmentActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
