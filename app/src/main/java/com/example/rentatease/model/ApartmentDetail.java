@@ -9,8 +9,8 @@ public class ApartmentDetail {
     private String price;
     private String description;
     private String address;
-    private String img1path;
-    private String img2path;
+    private Uri img1;
+    private Uri img2;
 
     public ApartmentDetail(String aptId, User user, String price, String description, String address) {
         this.aptId = aptId;
@@ -20,14 +20,14 @@ public class ApartmentDetail {
         this.address = address;
     }
 
-    public ApartmentDetail(String aptId, User user, String price, String description, String address, String img1path, String img2path) {
+    public ApartmentDetail(String aptId, User user, String price, String description, String address, Uri img1, Uri img2) {
         this.aptId = aptId;
         this.user = user;
         this.price = price;
         this.description = description;
         this.address = address;
-        this.img1path = img1path;
-        this.img2path = img2path;
+        this.img1 = img1;
+        this.img2 = img2;
     }
 
     public String getAptId() {
@@ -70,19 +70,19 @@ public class ApartmentDetail {
         this.address = address;
     }
 
-    public String getImg1path() {
-        return img1path;
+    public Uri getImg1() {
+        return img1;
     }
 
-    public void setImg1path(String img1path) {
-        this.img1path = img1path;
+    public void setImg1(Uri img1) {
+        this.img1 = img1;
     }
 
-    public String getImg2path() {
-        return img2path;
+    public Uri getImg2() {
+        return img2;
     }
 
-    public void setImg2path(String img2path) {
-        this.img2path = img2path;
+    public void setImg2(Uri img2) {
+        this.img2 = img2;
     }
 }
