@@ -2,6 +2,7 @@ package com.example.rentatease.adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +15,15 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentatease.R;
+import com.example.rentatease.activities.ApartmentDetailsActivity;
 import com.example.rentatease.model.Apartment;
-import com.example.rentatease.model.ApartmentDetail;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ApartmentAdapter extends RecyclerView.Adapter<ApartmentAdapter.ViewHolder> {
+public class ApartmentRenteeAdapter extends RecyclerView.Adapter<ApartmentRenteeAdapter.ViewHolder> {
 
 
     private Context context;
@@ -35,7 +36,7 @@ public class ApartmentAdapter extends RecyclerView.Adapter<ApartmentAdapter.View
         public AppCompatTextView tvDesc, tvPrice, tvAddress;
         AppCompatImageView ivImage1, ivImage2;
         ImageView ivDelete;
-
+        CardView cardView;
 
         ViewHolder(View view) {
             super(view);
@@ -46,11 +47,19 @@ public class ApartmentAdapter extends RecyclerView.Adapter<ApartmentAdapter.View
             ivImage1 = view.findViewById(R.id.ivImage1);
             ivImage2 = view.findViewById(R.id.ivImage2);
             ivDelete = view.findViewById(R.id.ivDel);
-            ivDelete.setOnClickListener(new View.OnClickListener() {
+            cardView = view.findViewById(R.id.cardView);
+            cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("all_appartments/" + apartment.getApartmentId());
-                    databaseReference.removeValue();
+                    apartment = apartmentDetailList.get(getAdapterPosition());
+                    Intent i = new Intent(context, ApartmentDetailsActivity.class);
+                    i.putExtra("image1", apartment.getImage1Url());
+                    i.putExtra("image2", apartment.getImage1Url());
+                    i.putExtra("address", apartment.getAddress());
+                    i.putExtra("desc", apartment.getDesc());
+                    i.putExtra("price", apartment.getPrice());
+                    i.putExtra("userId", apartment.getUserId());
+                    context.startActivity(i);
                 }
             });
 
@@ -60,7 +69,7 @@ public class ApartmentAdapter extends RecyclerView.Adapter<ApartmentAdapter.View
 
     }
 
-    public ApartmentAdapter(Context mContext, List<Apartment> apartmentDetailList) {
+    public ApartmentRenteeAdapter(Context mContext, List<Apartment> apartmentDetailList) {
         this.context = mContext;
         this.apartmentDetailList = apartmentDetailList;
 
@@ -86,7 +95,7 @@ public class ApartmentAdapter extends RecyclerView.Adapter<ApartmentAdapter.View
         holder.tvDesc.setText(String.format(apartment.getDesc()));
         holder.tvPrice.setText(String.format(apartment.getPrice()));
         holder.tvAddress.setText(apartment.getAddress());
-
+        holder.ivDelete.setVisibility(View.GONE);
         Picasso.with(context).load(apartment.getImage1Url()).into(holder.ivImage1);
         Picasso.with(context).load(apartment.getImage2Url()).into(holder.ivImage2);
 

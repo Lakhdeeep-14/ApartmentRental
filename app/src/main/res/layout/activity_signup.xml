@@ -24,9 +24,9 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="360dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:backgroundTint="@color/colorCardBackground"
                 app:cardElevation="10dp"
-                android:layout_marginTop="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -195,6 +195,36 @@
 
 
                     </androidx.cardview.widget.CardView>
+
+                    <RadioGroup
+                        android:id="@+id/radioGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <RadioButton
+                            android:id="@+id/radioButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:checked="true"
+                            android:text="Owner"
+                            android:textColor="@color/white"
+                            android:textSize="20dp" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="20dp"
+                            android:checked="false"
+                            android:text="Rentee"
+                            android:textColor="@color/white"
+                            android:textSize="20dp" />
+                    </RadioGroup>
+
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnAddUser"

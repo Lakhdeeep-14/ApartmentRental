@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,11 +34,12 @@ import java.util.Objects;
 public class SignUpActivity extends AppCompatActivity {
 
     private AppCompatEditText etName, etEmail, etMobile, etAddress, etCity, etPassword, etConfirm;
-    private String name, email, address, city, mobile, password, confirm;
+    private String name, email, address, city, mobile, password, confirm, type;
     private int UserCount = 0;
     private ContentLoadingProgressBar progressBar;
     private FirebaseAuth mAuth;
-
+    private RadioGroup radioGroup;
+    private RadioButton radioButton;
 
 
     @Override
@@ -54,8 +57,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.hide();
-
-
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
 
         AppCompatButton btnAdd = findViewById(R.id.btnAddUser);
@@ -69,6 +71,10 @@ public class SignUpActivity extends AppCompatActivity {
                 city = Objects.requireNonNull(etCity.getText()).toString();
                 password = Objects.requireNonNull(etPassword.getText()).toString();
                 confirm = Objects.requireNonNull(etConfirm.getText()).toString();
+
+                int selectedId = radioGroup.getCheckedRadioButtonId();
+                radioButton = findViewById(selectedId);
+                type = radioButton.getText().toString();
 
 
                 if (TextUtils.isEmpty(name)) {
@@ -94,10 +100,12 @@ public class SignUpActivity extends AppCompatActivity {
                     etConfirm.setError("Password does not match !");
                     return;
                 }
-
+                if (TextUtils.isEmpty(type)) {
+                    Toast.makeText(SignUpActivity.this, "Please select user type", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("all_users");
-
                 databaseReference.orderByChild("email").equalTo(email).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -113,7 +121,7 @@ public class SignUpActivity extends AppCompatActivity {
                         } else {
                             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("all_users");
                             String userId = mDatabase.push().getKey();
-                            Users user = new Users(userId, name, email, mobile, address, city);
+                            Users user = new Users(userId, name, email, mobile, address, city, type);
                             mDatabase.child(Objects.requireNonNull(userId)).setValue(user);
                             progressBar.hide();
                             Toast.makeText(SignUpActivity.this, "User Added Successfully!", Toast.LENGTH_LONG).show();

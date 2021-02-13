@@ -38,10 +38,11 @@ public class LoginActivity extends AppCompatActivity {
     AppCompatButton btnLogin, btnSignUp;
     AppCompatEditText etEmail, etPassword;
     String email, password, userId;
-    int userType = 0;
+
     SharedPreferences sharedPreferences;
     private FirebaseAuth mAuth;
     AppCompatTextView tvForgot;
+    String userType;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,12 +55,22 @@ public class LoginActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(Const.SHAREDPREFERENCE, MODE_PRIVATE);
         userId = sharedPreferences.getString(UserId, "0");
-        if (!TextUtils.equals(userId, "0")) {
 
-            Intent main = new Intent(LoginActivity.this, DashboardActivity.class);
-            main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(main);
-            finish();
+
+        if (!TextUtils.equals(userId, "0")) {
+            userType = sharedPreferences.getString(Const.UserType, "");
+            if (TextUtils.equals(userType, "Owner")) {
+                Intent main = new Intent(LoginActivity.this, DashboardActivity.class);
+                main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(main);
+                finish();
+            } else {
+                Intent main = new Intent(LoginActivity.this, ApartmentListActivity.class);
+                main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(main);
+                finish();
+
+            }
 
 
         }
@@ -74,11 +85,11 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(signup);
             }
         });
-        tvForgot=findViewById(R.id.tvForgot);
+        tvForgot = findViewById(R.id.tvForgot);
         tvForgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent forgot=new Intent(LoginActivity.this,ForgotActivity.class);
+                Intent forgot = new Intent(LoginActivity.this, ForgotActivity.class);
                 startActivity(forgot);
             }
         });
@@ -112,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString(UserId, user.getUserId());
                                 editor.putString(Const.Mobile, user.getMobile());
                                 editor.putString(Const.Name, user.getName());
+                                editor.putString(Const.UserType, user.getType());
                                 editor.apply();
 
                                 mAuth.signInWithEmailAndPassword(email, password)
@@ -122,8 +134,19 @@ public class LoginActivity extends AppCompatActivity {
                                                     // Sign in success, update UI with the signed-in user's information
                                                     //  Log.d(TAG, "signInWithEmail:success");
                                                     FirebaseUser user = mAuth.getCurrentUser();
-                                                    Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
-                                                    startActivity(i);
+                                                    userType = sharedPreferences.getString(Const.UserType, "");
+                                                    if (TextUtils.equals(userType, "Owner")) {
+                                                        Intent main = new Intent(LoginActivity.this, DashboardActivity.class);
+                                                        main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                        startActivity(main);
+                                                        finish();
+                                                    } else {
+                                                        Intent main = new Intent(LoginActivity.this, ApartmentListActivity.class);
+                                                        main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                        startActivity(main);
+                                                        finish();
+
+                                                    }
                                                     Toast.makeText(LoginActivity.this, "Login successfully",
                                                             Toast.LENGTH_SHORT).show();
                                                     finish();

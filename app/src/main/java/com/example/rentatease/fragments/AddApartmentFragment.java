@@ -44,7 +44,7 @@ public class AddApartmentFragment extends Fragment {
     Button img1Btn, img2Btn;
     MaterialButton addAptBtn;
     TextInputEditText price_edtTxt, description_edtTxt, location_edtTxt;
-    private Uri mImageUri1,mImageUri2 ;
+    private Uri mImageUri1, mImageUri2;
     FirebaseStorage storage;
     User user;
     DatabaseReference databaseApt;
@@ -65,6 +65,7 @@ public class AddApartmentFragment extends Fragment {
 
         return inflater.inflate(R.layout.add_appartment, container, false);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         img1 = view.findViewById(R.id.img1);
@@ -90,80 +91,37 @@ public class AddApartmentFragment extends Fragment {
 
         addAptBtn.setOnClickListener(
                 v -> {
-                    String price = price_edtTxt.getText().toString();
-                    String description = description_edtTxt.getText().toString();
-                    String location = location_edtTxt.getText().toString();
-
-                    if(price.equals("")){
-                        Toast.makeText(getContext(), "Enter Price" , Toast.LENGTH_LONG).show();
-                    }else if(description.equals("")){
-                        Toast.makeText(getContext(), "Enter Price" , Toast.LENGTH_LONG).show();
-                    }else if(location.equals("")){
-                        Toast.makeText(getContext(), "Enter Price" , Toast.LENGTH_LONG).show();
-                    }else {
-                        insertNewApt();
-                    }
+                    insertNewApt();
                 }
         );
     }
 
-    private void insertNewApt(){
-        aptID = databaseApt.push().getKey();
-
-        if(mImageUri1 != null || mImageUri2 !=null) {
-            if (mImageUri1 != null) {
-                uploadImageAndSaveUri(mImageUri1);
-            }
-            if (mImageUri2 != null) {
-                uploadImageAndSaveUri(mImageUri2);
-            }
-
-            ApartmentDetail apartmentDetail = new ApartmentDetail(aptID, user,
-                    price_edtTxt.getText().toString(),
-                    description_edtTxt.getText().toString(),
-                    location_edtTxt.getText().toString(),
-                    mImageUri1.getPath(),
-                    mImageUri2.getPath());
-
-            databaseApt.child(aptID).setValue(apartmentDetail , (error, ref) -> {
-                if(error == null){
-                    Toast.makeText(getContext(), "Apartment Added", Toast.LENGTH_LONG).show();
-                }
-                System.err.println("Value was set. Error = "+error);
-            });
-        }
-        else {
-            Toast.makeText(getContext(), "Upload Image", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-   /* private void insertNewApt(){
+    private void insertNewApt() {
         aptID = databaseApt.push().getKey();
         ApartmentDetail apartmentDetail = new ApartmentDetail(aptID, user,
                 price_edtTxt.getText().toString(),
                 description_edtTxt.getText().toString(),
                 location_edtTxt.getText().toString());
 
-        databaseApt.child(aptID).setValue(apartmentDetail , (error, ref) -> {
-            if(error == null){
-                if(mImageUri1 != null || mImageUri2 !=null) {
+        databaseApt.child(aptID).setValue(apartmentDetail, (error, ref) -> {
+            if (error == null) {
+                if (mImageUri1 != null || mImageUri2 != null) {
                     if (mImageUri1 != null) {
                         uploadImageAndSaveUri(mImageUri1);
                     }
                     if (mImageUri2 != null) {
                         uploadImageAndSaveUri(mImageUri2);
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(getContext(), "Upload Image", Toast.LENGTH_SHORT).show();
                 }
 
                 Toast.makeText(getContext(), "Apartment Added", Toast.LENGTH_LONG).show();
             }
-            System.err.println("Value was set. Error = "+error);
+            System.err.println("Value was set. Error = " + error);
         });
 
-    }*/
+    }
 
     private void openFileChooser() {
         Intent intent = new Intent();
@@ -186,16 +144,15 @@ public class AddApartmentFragment extends Fragment {
                 && data != null && data.getData() != null) {
             mImageUri1 = data.getData();
             Picasso.with(getContext()).load(mImageUri1).into(img1);
-        }else if (requestCode == PICK_IMAGE_REQUEST_NEW && resultCode == RESULT_OK
+        } else if (requestCode == PICK_IMAGE_REQUEST_NEW && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             mImageUri2 = data.getData();
             Picasso.with(getContext()).load(mImageUri2).into(img2);
         }
     }
 
-    private void uploadImageAndSaveUri(Uri mImageUri){
+    private void uploadImageAndSaveUri(Uri mImageUri) {
         Bitmap bitmap = null;
-
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), mImageUri);
         } catch (IOException e) {
@@ -205,12 +162,10 @@ public class AddApartmentFragment extends Fragment {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-
         StorageReference storageRef = storage.getReference();
-        StorageReference aptRefs = storageRef.child(mImageUri.getPath());
-//        StorageReference mountainsRef = storageRef.child("pics" + user.getUserId() + aptID);
+        StorageReference mountainsRef = storageRef.child("pics" + user.getUserId() + aptID);
 
-        UploadTask uploadTask = aptRefs.putBytes(data);
+        UploadTask uploadTask = mountainsRef.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -222,7 +177,9 @@ public class AddApartmentFragment extends Fragment {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
+                taskSnapshot.getUploadSessionUri();
             }
         });
+
     }
 }
