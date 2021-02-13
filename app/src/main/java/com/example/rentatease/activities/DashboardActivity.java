@@ -18,6 +18,7 @@ import com.example.rentatease.Const;
 import com.example.rentatease.R;
 import com.example.rentatease.adapters.ApartmentAdapter;
 import com.example.rentatease.model.Apartment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +32,7 @@ import static com.example.rentatease.Const.UserId;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    AppCompatButton btnAdd;
+    AppCompatButton btnAdd, btnLogout;
     private RecyclerView recyclerView;
     private List<Apartment> apartmentList;
     private ApartmentAdapter adapter;
@@ -56,6 +57,22 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
+        btnLogout = findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPreferences = getSharedPreferences(Const.SHAREDPREFERENCE, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+                FirebaseAuth.getInstance().signOut();
+                Intent i = new Intent(DashboardActivity.this, LoginActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+
         apartmentList = new ArrayList<>();
         recyclerView = findViewById(R.id.reclerView);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(DashboardActivity.this);
@@ -75,7 +92,6 @@ public class DashboardActivity extends AppCompatActivity {
 
                     if (TextUtils.equals(apartment.getUserId(), userId))
                         apartmentList.add(apartment);
-
 
 
                 }
