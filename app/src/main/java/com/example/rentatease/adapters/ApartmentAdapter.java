@@ -2,6 +2,7 @@ package com.example.rentatease.adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentatease.R;
+import com.example.rentatease.activities.UpdateApartmentActivity;
 import com.example.rentatease.model.Apartment;
 import com.example.rentatease.model.ApartmentDetail;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +36,7 @@ public class ApartmentAdapter extends RecyclerView.Adapter<ApartmentAdapter.View
 
         public AppCompatTextView tvDesc, tvPrice, tvAddress;
         AppCompatImageView ivImage1, ivImage2;
-        ImageView ivDelete;
+        ImageView ivDelete, ivEdit;
 
 
         ViewHolder(View view) {
@@ -46,11 +48,26 @@ public class ApartmentAdapter extends RecyclerView.Adapter<ApartmentAdapter.View
             ivImage1 = view.findViewById(R.id.ivImage1);
             ivImage2 = view.findViewById(R.id.ivImage2);
             ivDelete = view.findViewById(R.id.ivDel);
+            ivEdit = view.findViewById(R.id.ivEdit);
             ivDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("all_appartments/" + apartment.getApartmentId());
                     databaseReference.removeValue();
+                }
+            });
+            ivEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    apartment = apartmentDetailList.get(getAdapterPosition());
+                    Intent intent = new Intent(context, UpdateApartmentActivity.class);
+                    intent.putExtra("apartmentId", apartment.getApartmentId());
+                    intent.putExtra("price", apartment.getPrice());
+                    intent.putExtra("desc", apartment.getDesc());
+                    intent.putExtra("address", apartment.getAddress());
+                    intent.putExtra("image1", apartment.getImage1Url());
+                    intent.putExtra("image2", apartment.getImage2Url());
+                    context.startActivity(intent);
                 }
             });
 

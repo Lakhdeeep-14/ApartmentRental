@@ -35,7 +35,7 @@ public class ApartmentRenteeAdapter extends RecyclerView.Adapter<ApartmentRentee
 
         public AppCompatTextView tvDesc, tvPrice, tvAddress;
         AppCompatImageView ivImage1, ivImage2;
-        ImageView ivDelete;
+        ImageView ivDelete,ivEdit;
         CardView cardView;
 
         ViewHolder(View view) {
@@ -47,6 +47,7 @@ public class ApartmentRenteeAdapter extends RecyclerView.Adapter<ApartmentRentee
             ivImage1 = view.findViewById(R.id.ivImage1);
             ivImage2 = view.findViewById(R.id.ivImage2);
             ivDelete = view.findViewById(R.id.ivDel);
+            ivEdit = view.findViewById(R.id.ivEdit);
             cardView = view.findViewById(R.id.cardView);
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -96,6 +97,7 @@ public class ApartmentRenteeAdapter extends RecyclerView.Adapter<ApartmentRentee
         holder.tvPrice.setText(String.format(apartment.getPrice()));
         holder.tvAddress.setText(apartment.getAddress());
         holder.ivDelete.setVisibility(View.GONE);
+        holder.ivEdit.setVisibility(View.GONE);
         Picasso.with(context).load(apartment.getImage1Url()).into(holder.ivImage1);
         Picasso.with(context).load(apartment.getImage2Url()).into(holder.ivImage2);
 

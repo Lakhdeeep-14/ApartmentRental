@@ -27,6 +27,7 @@
         <activity android:name=".activities.AddApartmentActivity" />
         <activity android:name=".activities.ApartmentListActivity" />
         <activity android:name=".activities.ApartmentDetailsActivity" />
+        <activity android:name=".activities.UpdateApartmentActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
