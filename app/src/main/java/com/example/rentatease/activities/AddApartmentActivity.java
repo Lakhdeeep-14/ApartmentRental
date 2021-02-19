@@ -48,10 +48,10 @@ import static com.example.rentatease.Const.UserId;
 
 public class AddApartmentActivity extends AppCompatActivity {
 
-    private AppCompatEditText etAddress, etPrice, etDesc;
+    private AppCompatEditText etAddress, etPrice, etDesc, etTitle;
     private AppCompatButton btnAdd;
     private AppCompatImageView ivImage1, ivImage2;
-    String address, price, desc, image1, image2, userId;
+    String address, price, desc, image1, image2, userId, title;
     private static final int PICK_IMAGE_REQUEST1 = 1;
     private static final int PICK_IMAGE_REQUEST2 = 2;
     private Uri mImageUri1, mImageUri2;
@@ -70,6 +70,7 @@ public class AddApartmentActivity extends AppCompatActivity {
         etAddress = findViewById(R.id.etAddress);
         etPrice = findViewById(R.id.etPrice);
         etDesc = findViewById(R.id.etDesc);
+        etTitle = findViewById(R.id.etTitle);
         btnAdd = findViewById(R.id.btnAdd);
 
         ivImage1 = findViewById(R.id.ivImage1);
@@ -81,6 +82,12 @@ public class AddApartmentActivity extends AppCompatActivity {
                 address = etAddress.getText().toString();
                 price = etPrice.getText().toString();
                 desc = etDesc.getText().toString();
+                title = etTitle.getText().toString();
+
+                if (TextUtils.isEmpty(title)) {
+                    etTitle.setError("Please enter title");
+                    return;
+                }
 
                 if (TextUtils.isEmpty(address)) {
                     etAddress.setError("Please enter address");
@@ -105,7 +112,7 @@ public class AddApartmentActivity extends AppCompatActivity {
                 }
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("all_appartments");
                 String apartmentId = mDatabase.push().getKey();
-                Apartment apartment = new Apartment(apartmentId, price, desc, address, userId, image1, image2);
+                Apartment apartment = new Apartment(apartmentId, price, desc, address, userId, image1, image2,title);
                 mDatabase.child(Objects.requireNonNull(apartmentId)).setValue(apartment);
 
                 Toast.makeText(AddApartmentActivity.this, "Apartment Added Successfully!", Toast.LENGTH_LONG).show();
@@ -148,16 +155,16 @@ public class AddApartmentActivity extends AppCompatActivity {
                 && data != null && data.getData() != null) {
             mImageUri1 = data.getData();
             Picasso.with(AddApartmentActivity.this).load(mImageUri1).into(ivImage1);
-            uploadImage1(mImageUri1, PICK_IMAGE_REQUEST1);
+            uploadImage(mImageUri1, PICK_IMAGE_REQUEST1);
         } else if (requestCode == PICK_IMAGE_REQUEST2 && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             mImageUri2 = data.getData();
             Picasso.with(AddApartmentActivity.this).load(mImageUri2).into(ivImage2);
-            uploadImage1(mImageUri1, PICK_IMAGE_REQUEST2);
+            uploadImage(mImageUri2, PICK_IMAGE_REQUEST2);
         }
     }
 
-    private void uploadImage1(Uri mImageUri, int request) {
+    private void uploadImage(Uri mImageUri, int request) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Uploading");
         progressDialog.show();
@@ -192,7 +199,8 @@ public class AddApartmentActivity extends AppCompatActivity {
         });
 
     }
-    public static String generateSessionKey(int length){
+
+    public static String generateSessionKey(int length) {
         String alphabet =
                 new String("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"); // 9
 
@@ -201,7 +209,7 @@ public class AddApartmentActivity extends AppCompatActivity {
         String result = new String();
         Random r = new Random(); // 11
 
-        for (int i=0; i<length; i++) // 12
+        for (int i = 0; i < length; i++) // 12
             result = result + alphabet.charAt(r.nextInt(n)); //13
 
         return result;

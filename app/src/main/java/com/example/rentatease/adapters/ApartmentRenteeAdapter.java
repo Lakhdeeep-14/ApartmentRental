@@ -33,14 +33,14 @@ public class ApartmentRenteeAdapter extends RecyclerView.Adapter<ApartmentRentee
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public AppCompatTextView tvDesc, tvPrice, tvAddress;
+        public AppCompatTextView tvDesc, tvPrice, tvAddress, tvTitle;
         AppCompatImageView ivImage1, ivImage2;
-        ImageView ivDelete,ivEdit;
+        ImageView ivDelete, ivEdit;
         CardView cardView;
 
         ViewHolder(View view) {
             super(view);
-
+            tvTitle = view.findViewById(R.id.tvTitle);
             tvDesc = view.findViewById(R.id.tvDesc);
             tvPrice = view.findViewById(R.id.tvPrice);
             tvAddress = view.findViewById(R.id.tvAddress);
@@ -55,11 +55,12 @@ public class ApartmentRenteeAdapter extends RecyclerView.Adapter<ApartmentRentee
                     apartment = apartmentDetailList.get(getAdapterPosition());
                     Intent i = new Intent(context, ApartmentDetailsActivity.class);
                     i.putExtra("image1", apartment.getImage1Url());
-                    i.putExtra("image2", apartment.getImage1Url());
+                    i.putExtra("image2", apartment.getImage2Url());
                     i.putExtra("address", apartment.getAddress());
                     i.putExtra("desc", apartment.getDesc());
                     i.putExtra("price", apartment.getPrice());
                     i.putExtra("userId", apartment.getUserId());
+                    i.putExtra("title", apartment.getTitle());
                     context.startActivity(i);
                 }
             });
@@ -93,7 +94,8 @@ public class ApartmentRenteeAdapter extends RecyclerView.Adapter<ApartmentRentee
 
 
         apartment = apartmentDetailList.get(position);
-        holder.tvDesc.setText(String.format(apartment.getDesc()));
+        holder.tvTitle.setText(apartment.getTitle());
+        holder.tvDesc.setVisibility(View.GONE);
         holder.tvPrice.setText(String.format(apartment.getPrice()));
         holder.tvAddress.setText(apartment.getAddress());
         holder.ivDelete.setVisibility(View.GONE);

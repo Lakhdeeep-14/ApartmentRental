@@ -33,7 +33,7 @@ import static com.example.rentatease.Const.UserId;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    AppCompatButton btnAdd, btnLogout;
+    AppCompatButton btnAdd, btnLogout, btnChats;
     private RecyclerView recyclerView;
     private List<Apartment> apartmentList;
     private ApartmentAdapter adapter;
@@ -107,6 +107,15 @@ public class DashboardActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
 
+            }
+        });
+
+        btnChats = findViewById(R.id.btnChats);
+        btnChats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent chats = new Intent(DashboardActivity.this, OwnerChatsActivity.class);
+                startActivity(chats);
             }
         });
 

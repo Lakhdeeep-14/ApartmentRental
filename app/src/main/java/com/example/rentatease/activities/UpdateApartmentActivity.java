@@ -37,10 +37,10 @@ import static com.example.rentatease.Const.UserId;
 
 public class UpdateApartmentActivity extends AppCompatActivity {
 
-    private AppCompatEditText etAddress, etPrice, etDesc;
+    private AppCompatEditText etAddress, etPrice, etDesc, etTitle;
     private AppCompatButton btnUpdate;
     private AppCompatImageView ivImage1, ivImage2;
-    String address, price, desc, image1, image2, userId,apartmentId;
+    String address, price, desc, image1, image2, userId, apartmentId, title;
     private static final int PICK_IMAGE_REQUEST1 = 1;
     private static final int PICK_IMAGE_REQUEST2 = 2;
     private Uri mImageUri1, mImageUri2;
@@ -59,23 +59,26 @@ public class UpdateApartmentActivity extends AppCompatActivity {
         etAddress = findViewById(R.id.etAddress);
         etPrice = findViewById(R.id.etPrice);
         etDesc = findViewById(R.id.etDesc);
+        etTitle = findViewById(R.id.etTitle);
         btnUpdate = findViewById(R.id.btnUpdate);
 
         ivImage1 = findViewById(R.id.ivImage1);
         ivImage2 = findViewById(R.id.ivImage2);
 
-        address=getIntent().getStringExtra("address");
-        price=getIntent().getStringExtra("price");
-        desc=getIntent().getStringExtra("desc");
-        image1=getIntent().getStringExtra("image1");
-        image2=getIntent().getStringExtra("image2");
-        apartmentId=getIntent().getStringExtra("apartmentId");
+        title = getIntent().getStringExtra("title");
+        address = getIntent().getStringExtra("address");
+        price = getIntent().getStringExtra("price");
+        desc = getIntent().getStringExtra("desc");
+        image1 = getIntent().getStringExtra("image1");
+        image2 = getIntent().getStringExtra("image2");
+        apartmentId = getIntent().getStringExtra("apartmentId");
 
         Picasso.with(UpdateApartmentActivity.this).load(image1).into(ivImage1);
         Picasso.with(UpdateApartmentActivity.this).load(image2).into(ivImage2);
         etAddress.setText(address);
         etDesc.setText(desc);
         etPrice.setText(price);
+        etTitle.setText(title);
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +86,13 @@ public class UpdateApartmentActivity extends AppCompatActivity {
                 address = etAddress.getText().toString();
                 price = etPrice.getText().toString();
                 desc = etDesc.getText().toString();
+                title = etTitle.getText().toString();
+
+                if (TextUtils.isEmpty(title)) {
+                    etTitle.setError("Please enter title");
+                    return;
+                }
+
 
                 if (TextUtils.isEmpty(address)) {
                     etAddress.setError("Please enter address");
@@ -106,7 +116,7 @@ public class UpdateApartmentActivity extends AppCompatActivity {
                     return;
                 }
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("all_appartments");
-                Apartment apartment = new Apartment(apartmentId, price, desc, address, userId, image1, image2);
+                Apartment apartment = new Apartment(apartmentId, price, desc, address, userId, image1, image2, title);
                 mDatabase.child(Objects.requireNonNull(apartmentId)).setValue(apartment);
 
                 Toast.makeText(UpdateApartmentActivity.this, "Apartment updated Successfully!", Toast.LENGTH_LONG).show();
@@ -149,16 +159,16 @@ public class UpdateApartmentActivity extends AppCompatActivity {
                 && data != null && data.getData() != null) {
             mImageUri1 = data.getData();
             Picasso.with(UpdateApartmentActivity.this).load(mImageUri1).into(ivImage1);
-            uploadImage1(mImageUri1, PICK_IMAGE_REQUEST1);
+            uploadImage(mImageUri1, PICK_IMAGE_REQUEST1);
         } else if (requestCode == PICK_IMAGE_REQUEST2 && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             mImageUri2 = data.getData();
             Picasso.with(UpdateApartmentActivity.this).load(mImageUri2).into(ivImage2);
-            uploadImage1(mImageUri1, PICK_IMAGE_REQUEST2);
+            uploadImage(mImageUri2, PICK_IMAGE_REQUEST2);
         }
     }
 
-    private void uploadImage1(Uri mImageUri, int request) {
+    private void uploadImage(Uri mImageUri, int request) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Uploading");
         progressDialog.show();
@@ -193,7 +203,8 @@ public class UpdateApartmentActivity extends AppCompatActivity {
         });
 
     }
-    public static String generateSessionKey(int length){
+
+    public static String generateSessionKey(int length) {
         String alphabet =
                 new String("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"); // 9
 
@@ -202,7 +213,7 @@ public class UpdateApartmentActivity extends AppCompatActivity {
         String result = new String();
         Random r = new Random(); // 11
 
-        for (int i=0; i<length; i++) // 12
+        for (int i = 0; i < length; i++) // 12
             result = result + alphabet.charAt(r.nextInt(n)); //13
 
         return result;

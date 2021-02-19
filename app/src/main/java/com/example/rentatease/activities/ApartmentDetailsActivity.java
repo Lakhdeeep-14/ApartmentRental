@@ -1,22 +1,22 @@
 package com.example.rentatease.activities;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.rentatease.R;
-import com.example.rentatease.adapters.ApartmentAdapter;
 import com.example.rentatease.adapters.ViewPagerAdapter;
-import com.example.rentatease.model.Apartment;
-import com.example.rentatease.model.User;
 import com.example.rentatease.model.Users;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,11 +27,12 @@ import com.google.firebase.database.ValueEventListener;
 public class ApartmentDetailsActivity extends AppCompatActivity {
 
     ViewPager viewPager;
-    AppCompatTextView tvName, tvEmail, tvPhone, tvAddress, tvDesc, tvPrice;
-    String image1 = "", image2 = "", address, desc, price, userId;
+    AppCompatTextView tvName, tvEmail, tvPhone, tvAddress, tvDesc, tvPrice, tvTitle;
+    String image1 = "", image2 = "", address, desc, price, userId, title;
     LinearLayout sliderDotspanel;
     private int dotscount;
     private ImageView[] dots;
+    AppCompatButton btnChat;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class ApartmentDetailsActivity extends AppCompatActivity {
         desc = getIntent().getStringExtra("desc");
         price = getIntent().getStringExtra("price");
         userId = getIntent().getStringExtra("userId");
+        title = getIntent().getStringExtra("title");
 
         tvName = findViewById(R.id.tvName);
         tvEmail = findViewById(R.id.tvEmail);
@@ -51,10 +53,12 @@ public class ApartmentDetailsActivity extends AppCompatActivity {
         tvAddress = findViewById(R.id.tvAddress);
         tvPrice = findViewById(R.id.tvPrice);
         tvDesc = findViewById(R.id.tvDesc);
+        tvTitle = findViewById(R.id.tvTitle);
 
         tvPrice.setText("Price : " + price);
         tvAddress.setText("Address : " + address);
         tvDesc.setText("Description : " + desc);
+        tvTitle.setText(title);
 
         String[] images = {image1, image2};
         viewPager = findViewById(R.id.viewPager);
@@ -134,6 +138,16 @@ public class ApartmentDetailsActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
 
+            }
+        });
+
+        btnChat = findViewById(R.id.btnChat);
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ApartmentDetailsActivity.this, ChatActivity.class);
+                i.putExtra("ownerId", userId);
+                startActivity(i);
             }
         });
 

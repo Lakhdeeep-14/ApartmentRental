@@ -3,12 +3,12 @@ package com.example.rentatease.model;
 
 public class Apartment {
 
-    String apartmentId, price, desc, address, userId, image1Url, image2Url;
+    String apartmentId, price, desc, address, userId, image1Url, image2Url, title;
 
     public Apartment() {
     }
 
-    public Apartment(String apartmentId, String price, String desc, String address, String userId, String image1Url, String image2Url) {
+    public Apartment(String apartmentId, String price, String desc, String address, String userId, String image1Url, String image2Url, String title) {
         this.apartmentId = apartmentId;
         this.price = price;
         this.desc = desc;
@@ -16,6 +16,7 @@ public class Apartment {
         this.userId = userId;
         this.image1Url = image1Url;
         this.image2Url = image2Url;
+        this.title = title;
     }
 
     public String getApartmentId() {
@@ -72,5 +73,13 @@ public class Apartment {
 
     public void setImage2Url(String image2Url) {
         this.image2Url = image2Url;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

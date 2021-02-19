@@ -1,19 +1,25 @@
 package com.example.rentatease.activities;
 
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.rentatease.Const;
 import com.example.rentatease.R;
 import com.example.rentatease.adapters.ApartmentAdapter;
 import com.example.rentatease.adapters.ApartmentRenteeAdapter;
 import com.example.rentatease.model.Apartment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +34,7 @@ public class ApartmentListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Apartment> apartmentList;
     private ApartmentRenteeAdapter adapter;
+    AppCompatButton  btnLogout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +76,22 @@ public class ApartmentListActivity extends AppCompatActivity {
 
             }
         });
+
+        btnLogout = findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPreferences = getSharedPreferences(Const.SHAREDPREFERENCE, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+                FirebaseAuth.getInstance().signOut();
+                Intent i = new Intent(ApartmentListActivity.this, LoginActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
 
     }
 }

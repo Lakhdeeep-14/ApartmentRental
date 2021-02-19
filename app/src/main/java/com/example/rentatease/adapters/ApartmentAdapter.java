@@ -3,6 +3,7 @@ package com.example.rentatease.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +35,14 @@ public class ApartmentAdapter extends RecyclerView.Adapter<ApartmentAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public AppCompatTextView tvDesc, tvPrice, tvAddress;
+        public AppCompatTextView tvDesc, tvPrice, tvAddress, tvTitle;
         AppCompatImageView ivImage1, ivImage2;
         ImageView ivDelete, ivEdit;
 
 
         ViewHolder(View view) {
             super(view);
-
+            tvTitle = view.findViewById(R.id.tvTitle);
             tvDesc = view.findViewById(R.id.tvDesc);
             tvPrice = view.findViewById(R.id.tvPrice);
             tvAddress = view.findViewById(R.id.tvAddress);
@@ -52,6 +53,7 @@ public class ApartmentAdapter extends RecyclerView.Adapter<ApartmentAdapter.View
             ivDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    apartment = apartmentDetailList.get(getAdapterPosition());
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("all_appartments/" + apartment.getApartmentId());
                     databaseReference.removeValue();
                 }
@@ -61,6 +63,7 @@ public class ApartmentAdapter extends RecyclerView.Adapter<ApartmentAdapter.View
                 public void onClick(View view) {
                     apartment = apartmentDetailList.get(getAdapterPosition());
                     Intent intent = new Intent(context, UpdateApartmentActivity.class);
+                    intent.putExtra("title", apartment.getTitle());
                     intent.putExtra("apartmentId", apartment.getApartmentId());
                     intent.putExtra("price", apartment.getPrice());
                     intent.putExtra("desc", apartment.getDesc());
@@ -103,7 +106,10 @@ public class ApartmentAdapter extends RecyclerView.Adapter<ApartmentAdapter.View
         holder.tvDesc.setText(String.format(apartment.getDesc()));
         holder.tvPrice.setText(String.format(apartment.getPrice()));
         holder.tvAddress.setText(apartment.getAddress());
+        holder.tvTitle.setText(apartment.getTitle());
 
+        Log.e("URL1", apartment.getImage1Url());
+        Log.e("URL2", apartment.getImage2Url());
         Picasso.with(context).load(apartment.getImage1Url()).into(holder.ivImage1);
         Picasso.with(context).load(apartment.getImage2Url()).into(holder.ivImage2);
 
