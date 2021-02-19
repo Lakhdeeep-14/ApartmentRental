@@ -30,6 +30,7 @@
         <activity android:name=".activities.UpdateApartmentActivity" />
         <activity android:name=".activities.ChatActivity" />
         <activity android:name=".activities.OwnerChatsActivity" />
+        <activity android:name=".activities.BookingActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

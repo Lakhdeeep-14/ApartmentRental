@@ -38,6 +38,7 @@ public class ApartmentRenteeAdapter extends RecyclerView.Adapter<ApartmentRentee
         ImageView ivDelete, ivEdit;
         CardView cardView;
 
+
         ViewHolder(View view) {
             super(view);
             tvTitle = view.findViewById(R.id.tvTitle);
@@ -61,6 +62,7 @@ public class ApartmentRenteeAdapter extends RecyclerView.Adapter<ApartmentRentee
                     i.putExtra("price", apartment.getPrice());
                     i.putExtra("userId", apartment.getUserId());
                     i.putExtra("title", apartment.getTitle());
+                    i.putExtra("apartmentId", apartment.getApartmentId());
                     context.startActivity(i);
                 }
             });

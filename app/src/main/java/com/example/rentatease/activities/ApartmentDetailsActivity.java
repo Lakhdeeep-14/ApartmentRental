@@ -28,11 +28,11 @@ public class ApartmentDetailsActivity extends AppCompatActivity {
 
     ViewPager viewPager;
     AppCompatTextView tvName, tvEmail, tvPhone, tvAddress, tvDesc, tvPrice, tvTitle;
-    String image1 = "", image2 = "", address, desc, price, userId, title;
+    String image1 = "", image2 = "", address, desc, price, userId, title, apartmentId;
     LinearLayout sliderDotspanel;
     private int dotscount;
     private ImageView[] dots;
-    AppCompatButton btnChat;
+    AppCompatButton btnChat, btnBook;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class ApartmentDetailsActivity extends AppCompatActivity {
         price = getIntent().getStringExtra("price");
         userId = getIntent().getStringExtra("userId");
         title = getIntent().getStringExtra("title");
+        apartmentId = getIntent().getStringExtra("apartmentId");
 
         tvName = findViewById(R.id.tvName);
         tvEmail = findViewById(R.id.tvEmail);
@@ -147,6 +148,15 @@ public class ApartmentDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(ApartmentDetailsActivity.this, ChatActivity.class);
                 i.putExtra("ownerId", userId);
+                startActivity(i);
+            }
+        });
+        btnBook = findViewById(R.id.btnBook);
+        btnBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ApartmentDetailsActivity.this, BookingActivity.class);
+                i.putExtra("apartmentId", apartmentId);
                 startActivity(i);
             }
         });

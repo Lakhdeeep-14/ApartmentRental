@@ -34,7 +34,7 @@ public class ApartmentListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Apartment> apartmentList;
     private ApartmentRenteeAdapter adapter;
-    AppCompatButton  btnLogout;
+    AppCompatButton btnLogout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,16 +56,10 @@ public class ApartmentListActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                     Apartment apartment = dataSnapshot.getValue(Apartment.class);
-
-
-                        apartmentList.add(apartment);
-
-
-
+                    apartmentList.add(apartment);
                 }
 
                 adapter = new ApartmentRenteeAdapter(ApartmentListActivity.this, apartmentList);
-
                 recyclerView.setAdapter(adapter);
 
             }
