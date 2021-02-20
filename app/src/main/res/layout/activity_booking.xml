@@ -73,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/white"
                         android:focusable="false"
-                        android:hint="From Date"
+                        android:hint="To Date"
                         android:padding="10dp" />
 
                 </androidx.cardview.widget.CardView>

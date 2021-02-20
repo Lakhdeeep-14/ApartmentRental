@@ -45,14 +45,19 @@
         android:id="@+id/reclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintBottom_toTopOf="@+id/btnBookings"
         app:layout_constraintTop_toBottomOf="@+id/btnAdd" />
 
-    <View
-        android:id="@+id/view"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnBookings"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:background="@drawable/btn_bg"
+        android:text="Booking requests"
+        android:textColor="@android:color/white"
+       app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

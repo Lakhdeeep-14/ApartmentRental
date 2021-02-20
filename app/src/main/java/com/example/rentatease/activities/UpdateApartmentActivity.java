@@ -116,7 +116,7 @@ public class UpdateApartmentActivity extends AppCompatActivity {
                     return;
                 }
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("all_appartments");
-                Apartment apartment = new Apartment(apartmentId, price, desc, address, userId, image1, image2, title);
+                Apartment apartment = new Apartment(apartmentId, price, desc, address, userId, image1, image2, title,false);
                 mDatabase.child(Objects.requireNonNull(apartmentId)).setValue(apartment);
 
                 Toast.makeText(UpdateApartmentActivity.this, "Apartment updated Successfully!", Toast.LENGTH_LONG).show();

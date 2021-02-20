@@ -157,6 +157,7 @@ public class ApartmentDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(ApartmentDetailsActivity.this, BookingActivity.class);
                 i.putExtra("apartmentId", apartmentId);
+                i.putExtra("ownerId", userId);
                 startActivity(i);
             }
         });

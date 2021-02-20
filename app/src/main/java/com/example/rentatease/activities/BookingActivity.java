@@ -33,7 +33,7 @@ public class BookingActivity extends AppCompatActivity {
     AppCompatEditText etFrom, etTo;
     final Calendar myCalendar = Calendar.getInstance();
     final Calendar myCalendarTo = Calendar.getInstance();
-    String apartmentId, userId;
+    String apartmentId, userId, ownerId;
     AppCompatButton btnBook;
     SharedPreferences sharedPreferences;
 
@@ -48,6 +48,7 @@ public class BookingActivity extends AppCompatActivity {
         userId = sharedPreferences.getString(UserId, "0");
 
         apartmentId = getIntent().getStringExtra("apartmentId");
+        ownerId = getIntent().getStringExtra("ownerId");
 
         etFrom = findViewById(R.id.etFrom);
         etTo = findViewById(R.id.etTo);
@@ -120,9 +121,9 @@ public class BookingActivity extends AppCompatActivity {
                 Date date = new Date();
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("bookings");
                 String bookingId = mDatabase.push().getKey();
-                Booking booking = new Booking(bookingId, etFrom.getText().toString(), etTo.getText().toString(), userId, apartmentId, formatter.format(date));
+                Booking booking = new Booking(bookingId, etFrom.getText().toString(), etTo.getText().toString(), userId, apartmentId, formatter.format(date),ownerId);
                 mDatabase.child(Objects.requireNonNull(bookingId)).setValue(booking);
-                Toast.makeText(BookingActivity.this, "Booked successfully",
+                Toast.makeText(BookingActivity.this, "Booking request sent to owner",
                         Toast.LENGTH_SHORT).show();
                 finish();
 

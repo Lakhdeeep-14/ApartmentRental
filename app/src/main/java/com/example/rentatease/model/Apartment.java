@@ -4,11 +4,12 @@ package com.example.rentatease.model;
 public class Apartment {
 
     String apartmentId, price, desc, address, userId, image1Url, image2Url, title;
+    boolean isBooked;
 
     public Apartment() {
     }
 
-    public Apartment(String apartmentId, String price, String desc, String address, String userId, String image1Url, String image2Url, String title) {
+    public Apartment(String apartmentId, String price, String desc, String address, String userId, String image1Url, String image2Url, String title, boolean isBooked) {
         this.apartmentId = apartmentId;
         this.price = price;
         this.desc = desc;
@@ -17,6 +18,7 @@ public class Apartment {
         this.image1Url = image1Url;
         this.image2Url = image2Url;
         this.title = title;
+        this.isBooked = isBooked;
     }
 
     public String getApartmentId() {
@@ -81,5 +83,13 @@ public class Apartment {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean isBooked() {
+        return isBooked;
+    }
+
+    public void setBooked(boolean booked) {
+        isBooked = booked;
     }
 }

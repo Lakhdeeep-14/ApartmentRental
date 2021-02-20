@@ -98,6 +98,7 @@ public class DashboardActivity extends AppCompatActivity {
                 }
 
                 adapter = new ApartmentAdapter(DashboardActivity.this, apartmentList);
+
                 recyclerView.setAdapter(adapter);
 
             }

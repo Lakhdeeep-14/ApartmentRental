@@ -43,6 +43,7 @@ public class ChatActivity extends AppCompatActivity {
     EditText etMessage;
     ImageView ivSend;
     String ownerId, userId, ownerName, userName;
+    FirebaseAuth mAuth;
 
     private RecyclerView recyclerView;
     private List<Chat> chatList;
@@ -81,6 +82,8 @@ public class ChatActivity extends AppCompatActivity {
 
                 }
 
+                Log.e("userName", userName);
+                Log.e("ownerName", ownerName);
 
             }
 
