@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import static com.example.rentatease.Const.Name;
 import static com.example.rentatease.Const.UserId;
 
 public class BookingActivity extends AppCompatActivity {
@@ -33,7 +34,7 @@ public class BookingActivity extends AppCompatActivity {
     AppCompatEditText etFrom, etTo;
     final Calendar myCalendar = Calendar.getInstance();
     final Calendar myCalendarTo = Calendar.getInstance();
-    String apartmentId, userId, ownerId;
+    String apartmentId, userId, ownerId, address, price, title, bookedBy;
     AppCompatButton btnBook;
     SharedPreferences sharedPreferences;
 
@@ -46,9 +47,13 @@ public class BookingActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(Const.SHAREDPREFERENCE, MODE_PRIVATE);
         userId = sharedPreferences.getString(UserId, "0");
+        bookedBy = sharedPreferences.getString(Name, "");
 
         apartmentId = getIntent().getStringExtra("apartmentId");
         ownerId = getIntent().getStringExtra("ownerId");
+        address = getIntent().getStringExtra("address");
+        price = getIntent().getStringExtra("price");
+        title = getIntent().getStringExtra("title");
 
         etFrom = findViewById(R.id.etFrom);
         etTo = findViewById(R.id.etTo);
@@ -121,7 +126,7 @@ public class BookingActivity extends AppCompatActivity {
                 Date date = new Date();
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("bookings");
                 String bookingId = mDatabase.push().getKey();
-                Booking booking = new Booking(bookingId, etFrom.getText().toString(), etTo.getText().toString(), userId, apartmentId, formatter.format(date),ownerId);
+                Booking booking = new Booking(bookingId, etFrom.getText().toString(), etTo.getText().toString(), userId, apartmentId, formatter.format(date), ownerId, title, address, price, bookedBy,false);
                 mDatabase.child(Objects.requireNonNull(bookingId)).setValue(booking);
                 Toast.makeText(BookingActivity.this, "Booking request sent to owner",
                         Toast.LENGTH_SHORT).show();

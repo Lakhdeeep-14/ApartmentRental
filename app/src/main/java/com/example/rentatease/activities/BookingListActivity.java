@@ -16,9 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentatease.Const;
 import com.example.rentatease.R;
-import com.example.rentatease.adapters.ApartmentAdapter;
 import com.example.rentatease.adapters.ApartmentRenteeAdapter;
+import com.example.rentatease.adapters.BookingAdapter;
 import com.example.rentatease.model.Apartment;
+import com.example.rentatease.model.Booking;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,38 +30,46 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApartmentListActivity extends AppCompatActivity {
+import static com.example.rentatease.Const.UserId;
+
+public class BookingListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private List<Apartment> apartmentList;
-    private ApartmentRenteeAdapter adapter;
-    AppCompatButton btnLogout;
+    private List<Booking> bookingList;
+    private BookingAdapter adapter;
+    SharedPreferences sharedPreferences;
+    String userId;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_apartment_list);
-        apartmentList = new ArrayList<>();
+        setContentView(R.layout.activity_booking_list);
+
+        sharedPreferences = getSharedPreferences(Const.SHAREDPREFERENCE, MODE_PRIVATE);
+        userId = sharedPreferences.getString(UserId, "0");
+
+        bookingList = new ArrayList<>();
         recyclerView = findViewById(R.id.reclerView);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ApartmentListActivity.this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(BookingListActivity.this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("all_appartments");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("bookings");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                apartmentList.clear();
+                bookingList.clear();
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-                    Apartment apartment = dataSnapshot.getValue(Apartment.class);
-                    if(!apartment.isBooked())
-                    apartmentList.add(apartment);
+                    Booking booking = dataSnapshot.getValue(Booking.class);
+                    if (TextUtils.equals(booking.getOwnerId(), userId) && !booking.isChecked())
+                        bookingList.add(booking);
                 }
 
-                adapter = new ApartmentRenteeAdapter(ApartmentListActivity.this, apartmentList);
+                adapter = new BookingAdapter(BookingListActivity.this, bookingList);
                 recyclerView.setAdapter(adapter);
 
             }
@@ -69,21 +78,6 @@ public class ApartmentListActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
 
-            }
-        });
-
-        btnLogout = findViewById(R.id.btnLogout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sharedPreferences = getSharedPreferences(Const.SHAREDPREFERENCE, MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.apply();
-                FirebaseAuth.getInstance().signOut();
-                Intent i = new Intent(ApartmentListActivity.this, LoginActivity.class);
-                startActivity(i);
-                finish();
             }
         });
 
