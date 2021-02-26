@@ -42,7 +42,7 @@ public class ChatActivity extends AppCompatActivity {
 
     EditText etMessage;
     ImageView ivSend;
-    String ownerId, userId, ownerName, userName;
+    String ownerId, userId, ownerName, userName, apartmentId, address, title;
     FirebaseAuth mAuth;
 
     private RecyclerView recyclerView;
@@ -55,7 +55,10 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        apartmentId = getIntent().getStringExtra("apartmentId");
         ownerId = getIntent().getStringExtra("ownerId");
+        address = getIntent().getStringExtra("address");
+        title = getIntent().getStringExtra("title");
         etMessage = findViewById(R.id.etMessage);
         ivSend = findViewById(R.id.ivSend);
 
@@ -106,8 +109,8 @@ public class ChatActivity extends AppCompatActivity {
                     Chat chat = dataSnapshot.getValue(Chat.class);
 
 
-                    if ((TextUtils.equals(chat.getMsgFrom(), userId) && TextUtils.equals(chat.getMsgTo(), ownerId)) ||
-                            (TextUtils.equals(chat.getMsgTo(),userId) && TextUtils.equals(chat.getMsgFrom(), ownerId))) {
+                    if ((TextUtils.equals(chat.getMsgFrom(), userId) && TextUtils.equals(chat.getMsgTo(), ownerId) && TextUtils.equals(chat.getApartmentId(), apartmentId)) ||
+                            (TextUtils.equals(chat.getMsgTo(), userId) && TextUtils.equals(chat.getMsgFrom(), ownerId) && TextUtils.equals(chat.getApartmentId(), apartmentId))) {
                         isChatExist = true;
                     }
 
@@ -137,7 +140,7 @@ public class ChatActivity extends AppCompatActivity {
                 if (!isChatExist) {
                     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("chats");
                     String chatId = mDatabase.push().getKey();
-                    Chat chat = new Chat(chatId, userId, ownerId, userName, ownerName, "Chat Start", formatter.format(date));
+                    Chat chat = new Chat(chatId, userId, ownerId, userName, ownerName, "Chat Start", formatter.format(date), apartmentId, title, address);
                     mDatabase.child(Objects.requireNonNull(chatId)).setValue(chat);
                     isChatExist = true;
                 }
@@ -145,7 +148,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("chat_details");
                 String chat_detailsId = mDatabase.push().getKey();
-                Chat chat = new Chat(chat_detailsId,userId, ownerId,userName, ownerName, msg, formatter.format(date));
+                Chat chat = new Chat(chat_detailsId, userId, ownerId, userName, ownerName, msg, formatter.format(date), apartmentId, title, address);
                 mDatabase.child(Objects.requireNonNull(chat_detailsId)).setValue(chat);
                 etMessage.setText("");
             }
@@ -169,8 +172,8 @@ public class ChatActivity extends AppCompatActivity {
                     Chat chat = dataSnapshot.getValue(Chat.class);
 
 
-                    if ((TextUtils.equals(chat.getMsgFrom(), userId) && TextUtils.equals(chat.getMsgTo(), ownerId)) ||
-                            (TextUtils.equals(chat.getMsgTo(), userId) && TextUtils.equals(chat.getMsgFrom(), ownerId)))
+                    if ((TextUtils.equals(chat.getMsgFrom(), userId) && TextUtils.equals(chat.getMsgTo(), ownerId) && TextUtils.equals(chat.getApartmentId(), apartmentId)) ||
+                            (TextUtils.equals(chat.getMsgTo(), userId) && TextUtils.equals(chat.getMsgFrom(), ownerId) && TextUtils.equals(chat.getApartmentId(), apartmentId)))
                         chatList.add(chat);
 
 

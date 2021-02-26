@@ -3,12 +3,12 @@ package com.example.rentatease.model;
 
 public class Chat {
 
-    String chatId, msgFrom, msgTo, msgFromName, msgToName, message, datetime;
+    String chatId, msgFrom, msgTo, msgFromName, msgToName, message, datetime, apartmentId, title, address;
 
     public Chat() {
     }
 
-    public Chat(String chatId, String msgFrom, String msgTo, String msgFromName, String msgToName, String message, String datetime) {
+    public Chat(String chatId, String msgFrom, String msgTo, String msgFromName, String msgToName, String message, String datetime, String apartmentId, String title, String address) {
         this.chatId = chatId;
         this.msgFrom = msgFrom;
         this.msgTo = msgTo;
@@ -16,6 +16,9 @@ public class Chat {
         this.msgToName = msgToName;
         this.message = message;
         this.datetime = datetime;
+        this.apartmentId = apartmentId;
+        this.title = title;
+        this.address = address;
     }
 
     public String getChatId() {
@@ -72,5 +75,29 @@ public class Chat {
 
     public void setDatetime(String datetime) {
         this.datetime = datetime;
+    }
+
+    public String getApartmentId() {
+        return apartmentId;
+    }
+
+    public void setApartmentId(String apartmentId) {
+        this.apartmentId = apartmentId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
