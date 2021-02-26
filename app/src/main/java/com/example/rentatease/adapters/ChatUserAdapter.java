@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentatease.R;
@@ -30,17 +31,24 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        public TextView tvUser;
+        public TextView tvUser, tvTitle, tvAddress;
+        CardView cardView;
 
         ViewHolder(View view) {
             super(view);
             tvUser = view.findViewById(R.id.tvFromUser);
-            tvUser.setOnClickListener(new View.OnClickListener() {
+            tvTitle = view.findViewById(R.id.tvTitle);
+            tvAddress = view.findViewById(R.id.tvAddress);
+            cardView = view.findViewById(R.id.cardView);
+            cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     chat = chatList.get(getAdapterPosition());
                     Intent i = new Intent(context, ChatActivity.class);
                     i.putExtra("ownerId", chat.getMsgFrom());
+                    i.putExtra("apartmentId", chat.getApartmentId());
+                    i.putExtra("title", chat.getTitle());
+                    i.putExtra("address", chat.getAddress());
                     context.startActivity(i);
                 }
             });
@@ -75,7 +83,8 @@ public class ChatUserAdapter extends RecyclerView.Adapter<ChatUserAdapter.ViewHo
 
 
         holder.tvUser.setText(chat.getMsgFromName());
-
+        holder.tvTitle.setText(chat.getTitle());
+        holder.tvAddress.setText(chat.getAddress());
 
     }
 

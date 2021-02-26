@@ -148,6 +148,9 @@ public class ApartmentDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(ApartmentDetailsActivity.this, ChatActivity.class);
                 i.putExtra("ownerId", userId);
+                i.putExtra("apartmentId", apartmentId);
+                i.putExtra("title", title);
+                i.putExtra("address", address);
                 startActivity(i);
             }
         });

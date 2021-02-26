@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rentatease">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RentAtEase">
-
+        <activity
+            android:name=".NavigationActivity"
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/Theme.RentAtEase.NoActionBar"/>
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,15 +28,15 @@
         <activity android:name=".activities.SignUpActivity" />
         <activity android:name=".activities.DashboardActivity" />
         <activity android:name=".activities.AddApartmentActivity" />
-        <activity android:name=".activities.ApartmentListActivity" />
+        <activity android:name=".activities.ApartmentListActivity"
+            android:theme="@style/Theme.RentAtEaseBar"/>
         <activity android:name=".activities.ApartmentDetailsActivity" />
         <activity android:name=".activities.UpdateApartmentActivity" />
         <activity android:name=".activities.ChatActivity" />
         <activity android:name=".activities.OwnerChatsActivity" />
         <activity android:name=".activities.BookingActivity" />
-        <activity android:name=".activities.BookingListActivity" />
+        <activity android:name=".activities.BookingListActivity"
+          />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

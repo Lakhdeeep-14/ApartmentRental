@@ -17,6 +17,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.example.rentatease.Const;
+import com.example.rentatease.NavigationActivity;
 import com.example.rentatease.R;
 import com.example.rentatease.model.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -60,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         if (!TextUtils.equals(userId, "0")) {
             userType = sharedPreferences.getString(Const.UserType, "");
             if (TextUtils.equals(userType, "Owner")) {
-                Intent main = new Intent(LoginActivity.this, DashboardActivity.class);
+                Intent main = new Intent(LoginActivity.this, NavigationActivity.class);
                 main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(main);
                 finish();
@@ -136,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                                                     FirebaseUser user = mAuth.getCurrentUser();
                                                     userType = sharedPreferences.getString(Const.UserType, "");
                                                     if (TextUtils.equals(userType, "Owner")) {
-                                                        Intent main = new Intent(LoginActivity.this, DashboardActivity.class);
+                                                        Intent main = new Intent(LoginActivity.this, NavigationActivity.class);
                                                         main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                         startActivity(main);
                                                         finish();

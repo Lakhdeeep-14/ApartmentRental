@@ -19,10 +19,13 @@ import com.example.rentatease.R;
 import com.example.rentatease.activities.UpdateApartmentActivity;
 import com.example.rentatease.model.Apartment;
 import com.example.rentatease.model.Booking;
+import com.example.rentatease.model.Chat;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,7 +54,14 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
             btnCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                    Date date = new Date();
                     booking = bookingList.get(getAdapterPosition());
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("chat_details");
+                    String chat_detailsId = mDatabase.push().getKey();
+                    Chat chat = new Chat(chat_detailsId, booking.getOwnerId(), booking.getUserId(), "", "", "Owner rejected the booking request", formatter.format(date), booking.getApartmentId(), booking.getTitle(), booking.getAddress());
+                    mDatabase.child(Objects.requireNonNull(chat_detailsId)).setValue(chat);
+
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("bookings/" + booking.getBookingId());
                     databaseReference.removeValue();
                 }
@@ -65,6 +75,14 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
 
                     DatabaseReference mDatabaseBooking = FirebaseDatabase.getInstance().getReference("bookings/" + booking.getBookingId());
                     mDatabaseBooking.child("checked").setValue(true);
+
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                    Date date = new Date();
+
+                    DatabaseReference mDatabaseChat = FirebaseDatabase.getInstance().getReference("chat_details");
+                    String chat_detailsId = mDatabaseChat.push().getKey();
+                    Chat chat = new Chat(chat_detailsId, booking.getOwnerId(), booking.getUserId(), "", "", "Owner accepted the booking request", formatter.format(date), booking.getApartmentId(), booking.getTitle(), booking.getAddress());
+                    mDatabaseChat.child(Objects.requireNonNull(chat_detailsId)).setValue(chat);
 
                 }
             });

@@ -1,18 +1,22 @@
-package com.example.rentatease.activities;
+package com.example.rentatease.fragments;
 
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rentatease.Const;
 import com.example.rentatease.R;
+import com.example.rentatease.activities.BookingListActivity;
 import com.example.rentatease.adapters.BookingAdapter;
 import com.example.rentatease.model.Booking;
 import com.google.firebase.database.DataSnapshot;
@@ -24,9 +28,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.example.rentatease.Const.UserId;
 
-public class BookingListActivity extends AppCompatActivity {
+public class BookingsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private List<Booking> bookingList;
@@ -35,17 +40,17 @@ public class BookingListActivity extends AppCompatActivity {
     String userId;
 
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_booking_list);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
 
-        sharedPreferences = getSharedPreferences(Const.SHAREDPREFERENCE, MODE_PRIVATE);
+        View root = inflater.inflate(R.layout.activity_booking_list, container, false);
+
+        sharedPreferences = getActivity().getSharedPreferences(Const.SHAREDPREFERENCE, MODE_PRIVATE);
         userId = sharedPreferences.getString(UserId, "0");
 
         bookingList = new ArrayList<>();
-        recyclerView = findViewById(R.id.reclerView);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(BookingListActivity.this);
+        recyclerView = root.findViewById(R.id.reclerView);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -63,7 +68,7 @@ public class BookingListActivity extends AppCompatActivity {
                         bookingList.add(booking);
                 }
 
-                adapter = new BookingAdapter(BookingListActivity.this, bookingList);
+                adapter = new BookingAdapter(getContext(), bookingList);
                 recyclerView.setAdapter(adapter);
 
             }
@@ -76,5 +81,6 @@ public class BookingListActivity extends AppCompatActivity {
         });
 
 
+        return root;
     }
 }

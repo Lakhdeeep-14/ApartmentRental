@@ -22,5 +22,15 @@
         android:name="com.example.rentatease.fragments.ChatFragment"
         android:label="Chat"
         tools:layout="@layout/activity_owner_chats" />
+    <fragment
+        android:id="@+id/nav_bookings"
+        android:name="com.example.rentatease.fragments.BookingsFragment"
+        android:label="Bookings"
+        tools:layout="@layout/activity_booking_list" />
 
+    <fragment
+        android:id="@+id/nav_Logout"
+        android:name="com.example.rentatease.fragments.LogoutFragment"
+        android:label="Logout"
+        tools:layout="@layout/fragment_logout" />
 </navigation>
