@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.rentatease.fragments.ApartmentsFragment"
+        android:label="Apartments"
+        tools:layout="@layout/fragment_apartments" />
+
+    <fragment
+        android:id="@+id/nav_add_apartment"
+        android:name="com.example.rentatease.fragments.AddFragment"
+        android:label="Add Apartment"
+        tools:layout="@layout/fragment_add_apartment" />
+
+
+</navigation>
